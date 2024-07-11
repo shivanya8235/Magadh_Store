@@ -10,6 +10,7 @@ import Products from './Pages/Products';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { ChakraProvider } from '@chakra-ui/react'
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,9 @@ function App() {
     <>
      <ChakraProvider>
       <Router>
+        <div>
+          <Toaster/>
+        </div>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Homepage />} />

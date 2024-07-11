@@ -7,7 +7,7 @@ import { Linkedin } from 'lucide-react';
 import { Code } from 'lucide-react';
 const Footer = () => {
   return (
-    <footer className="w-full h-24 bg-[#38b000] p-4 flex flex-row justify-between">
+    <footer className=" w-full h-24 bg-[#38b000] p-4 flex flex-row justify-between bottom-0 left-0">
       <div>
       <div className="py-2">
         <Link to={"https://tourism.bihar.gov.in/"} className="text-white flex items-center"><TreeDeciduous/><p>Bihar Tourism</p></Link>
