@@ -1,7 +1,7 @@
 import React from "react";
 import PasswordInput from "./Password";
 import { useState } from "react";
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from "lucide-react";
 import {
   FormControl,
   FormLabel,
@@ -10,21 +10,24 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { LoginService } from "../Services/Index";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/userSlice";
 
-const LoginForm = ({setOpenSignUP}) => {
+const LoginForm = ({ setOpenSignUP, handleOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const isDisabled = email === "" && password === "";
-  const login = async () => {
-    console.log(email, password)
-    try {
-      const response = await axios.post(
-        "https://api.escuelajs.co/api/v1/auth/login",
-        { email: email, password: password }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+  const loginHandler = async () => {
+    const userLoginData = {
+      email: email,
+      password: password,
+    };
+    const data = await LoginService(userLoginData);
+    if (data) {
+      handleOpen();
+      dispatch(setUser(data));
     }
   };
   return (
@@ -48,11 +51,17 @@ const LoginForm = ({setOpenSignUP}) => {
           background={"#fb8500"}
           textColor={"white"}
           isDisabled={isDisabled}
-          onClick={login}
+          onClick={loginHandler}
         >
           Login
         </Button>
-        <button onClick={()=>setOpenSignUP(true)} className="text-lg w- w-full font-medium justify-center items-center p-2 flex flex-row">Register<ChevronRight/></button> 
+        <button
+          onClick={() => setOpenSignUP(true)}
+          className="text-lg w- w-full font-medium justify-center items-center p-2 flex flex-row"
+        >
+          Register
+          <ChevronRight />
+        </button>
       </div>
     </div>
   );

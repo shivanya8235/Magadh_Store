@@ -41,8 +41,8 @@ const HorizontalProductCard = (props) => {
   };
   const moveToWishlists = () => {
     dispatch(removeFromCartById(id));
-    dispatch(addToWishlist(props))
-    toast.success("Moved to wishlist")
+    dispatch(addToWishlist(props));
+    toast.success("Moved to wishlist");
   };
   return (
     <div>
@@ -61,7 +61,9 @@ const HorizontalProductCard = (props) => {
           <CardBody>
             <Heading size="md">{title}</Heading>
 
-            <Text py="2">{description}</Text>
+            <Text py="2" className="line-clamp-2">
+              {description}
+            </Text>
             <div className="flex flex-row gap-4 items-center">
               {" "}
               <IconButton

@@ -4,6 +4,7 @@ import Productcard from "../components/Productcard";
 import HorizontalProductCard from "../components/HorizontalProductCard";
 import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import CartProductsDetails from "../components/CartProductsDetails";
 
 function Cartpage() {
   const cart = useSelector((state) => state.cart.cart);
@@ -11,10 +12,15 @@ function Cartpage() {
   return (
     <div className="min-h-dvh">
       {cart.length != 0 ? (
-        <div>
-          {cart.map((element, index) => {
-            return <HorizontalProductCard {...element} key={index} />;
-          })}
+        <div className="grid grid-cols-2">
+          <div>
+            {cart.map((element, index) => {
+              return <HorizontalProductCard {...element} key={index} />;
+            })}
+          </div>
+          <div className="pt-28">
+            <CartProductsDetails />
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-dvh">

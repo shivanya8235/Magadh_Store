@@ -13,11 +13,13 @@ import Signup from "./Signup";
 import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import { useLocation } from "react-router-dom";
-
+import { Avatar } from "@chakra-ui/react";
 
 const Badge = ({ count, className }) => {
   return (
-    <div className={`absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-500 border-2 border-white rounded-full -top-2 -end-2 ${className}`}>
+    <div
+      className={`absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-500 border-2 border-white rounded-full -top-2 -end-2 ${className}`}
+    >
       {count}
     </div>
   );
@@ -27,33 +29,40 @@ const Navbar = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const [open, setOpen] = useState(false);
   const [opensignup, setOpenSignUP] = useState(false);
-  const location = useLocation()
+  const location = useLocation();
+  const { user } = useSelector((state) => state.user);
   const handleOpen = () => {
     setOpen(!open);
   };
+  console.log(user);
   return (
     <header className="sticky top-0 left-0 w-full z-10">
       <div className="navbar p-4 h-20 flex flex-row justify-between">
         <div className="text-2xl font-bold">
           <h2>Magadh Store</h2>
         </div>
-        {location.pathname == "/Products" && <SearchBar/>}
+        {location.pathname == "/Products" && <SearchBar />}
         <div className="flex gap-8">
           <Link to="" onClick={handleOpen}>
             <div className="flex flex-col justify-center items-center font-semibold">
-              <CircleUserRound size={30} />
+              {/* <CircleUserRound size={30} /> */}
+              <Avatar
+                size={"sm"}
+                name={user?.username}
+                src="https://bit.ly/tioluwani-kolawole"
+              />
               <p>Profile</p>
             </div>
           </Link>
           <ModalComp isOpen={open} onClose={handleOpen} heading={"Login"}>
-            <LoginForm setOpenSignUP={setOpenSignUP} />
+            <LoginForm setOpenSignUP={setOpenSignUP} handleOpen={handleOpen} />
           </ModalComp>
           <ModalComp
             isOpen={opensignup}
             onClose={() => setOpenSignUP(false)}
             heading={"Signup"}
           >
-            <Signup />
+            <Signup setOpenSignUP={setOpenSignUP} />
           </ModalComp>
           <Link to="/cart">
             <div className=" relative flex flex-col justify-center items-center font-semibold">
@@ -65,7 +74,7 @@ const Navbar = () => {
           <Link to="/wishlists">
             <div className=" relative flex flex-col justify-center items-center font-semibold">
               <Heart size={30} />
-              <Badge  className={"end-0"} count={wishlist.length} />
+              <Badge className={"end-0"} count={wishlist.length} />
               <p>Wishlist</p>
             </div>
           </Link>
