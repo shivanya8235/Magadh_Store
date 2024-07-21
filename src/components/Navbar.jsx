@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import { useLocation } from "react-router-dom";
 import { Avatar } from "@chakra-ui/react";
+import Profile from "./Profile";
 
 const Badge = ({ count, className }) => {
   return (
@@ -29,12 +30,13 @@ const Navbar = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const [open, setOpen] = useState(false);
   const [opensignup, setOpenSignUP] = useState(false);
-  const location = useLocation();
   const { user } = useSelector((state) => state.user);
+  const location = useLocation();
   const handleOpen = () => {
-    setOpen(!open);
+    if (!user) {
+      setOpen(!open);
+    }
   };
-  console.log(user);
   return (
     <header className="sticky top-0 left-0 w-full z-10">
       <div className="navbar p-4 h-20 flex flex-row justify-between">
@@ -44,15 +46,7 @@ const Navbar = () => {
         {location.pathname == "/Products" && <SearchBar />}
         <div className="flex gap-8">
           <Link to="" onClick={handleOpen}>
-            <div className="flex flex-col justify-center items-center font-semibold">
-              {/* <CircleUserRound size={30} /> */}
-              <Avatar
-                size={"sm"}
-                name={user?.username}
-                src="https://bit.ly/tioluwani-kolawole"
-              />
-              <p>Profile</p>
-            </div>
+            <Profile />
           </Link>
           <ModalComp isOpen={open} onClose={handleOpen} heading={"Login"}>
             <LoginForm setOpenSignUP={setOpenSignUP} handleOpen={handleOpen} />

@@ -27,7 +27,9 @@ const LoginForm = ({ setOpenSignUP, handleOpen }) => {
     const data = await LoginService(userLoginData);
     if (data) {
       handleOpen();
-      dispatch(setUser(data));
+      const user = { token: data.token, user: data.user };
+      dispatch(setUser(user));
+      localStorage.setItem("user", JSON.stringify(user));
     }
   };
   return (
